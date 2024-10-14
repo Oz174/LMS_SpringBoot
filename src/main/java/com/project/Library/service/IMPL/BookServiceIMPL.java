@@ -18,13 +18,20 @@ public class BookServiceIMPL implements BookService {
     private BookRepo bookRepo;
 
     @Override
-    public String addBook(BookSavedDTO bookSavedDTO) {
+    public BookDTO addBook(BookSavedDTO bookSavedDTO) {
         Book book = new Book(
                 bookSavedDTO.getTitle(),
                 bookSavedDTO.getAuthor_name(),
+                false
         );
         bookRepo.save(book);
-        return "Book Added Successfully";
+        BookDTO bookDTO = new BookDTO(
+                book.getBook_id(),
+                book.getTitle(),
+                book.getAuthor_name(),
+                book.isBorrowed()
+        );
+        return bookDTO;
     }
 
     @Override
@@ -37,6 +44,7 @@ public class BookServiceIMPL implements BookService {
                     book.getBook_id(),
                     book.getTitle(),
                     book.getAuthor_name(),
+                    book.isBorrowed()
             );
             bookDTOList.add(bookDTO);
         }
@@ -44,7 +52,7 @@ public class BookServiceIMPL implements BookService {
     }
 
     @Override
-    public String updateBook(int id, BookSavedDTO bookUpdateDTO) {
+    public BookDTO updateBook(int id, BookSavedDTO bookUpdateDTO) {
         // check if there's a book with the id that exists
 
         if (bookRepo.existsById(id)){
@@ -52,24 +60,30 @@ public class BookServiceIMPL implements BookService {
             book.setTitle(bookUpdateDTO.getTitle());
             book.setAuthor_name(bookUpdateDTO.getAuthor_name());
             bookRepo.save(book);
-            return "Update Successful!";
+            BookDTO bookDTO = new BookDTO(
+                    book.getBook_id(),
+                    book.getTitle(),
+                    book.getAuthor_name(),
+                    book.isBorrowed()
+            );
+            return bookDTO;
 
         }
         else{
             System.out.println("Book ID Doesn't Exist !!");
-            return "Entry doesn't exist!";
+            return null; //!TODO: return a message to the user
         }
 
     }
 
     @Override
-    public String deleteBook(int id) {
+    public boolean deleteBook(int id) {
         if (bookRepo.existsById(id)){
             bookRepo.deleteById(id);
-            return "Deleted Successfully";
+            return true;
         }
         else{
-             return "Book Doesn't Exist" ;
+             throw new RuntimeException("Book ID Doesn't Exist !!");
         }
     }
 
@@ -80,6 +94,7 @@ public class BookServiceIMPL implements BookService {
                 book.getBook_id(),
                 book.getTitle(),
                 book.getAuthor_name(),
+                book.isBorrowed()
         );
         return bookDTO;
     }

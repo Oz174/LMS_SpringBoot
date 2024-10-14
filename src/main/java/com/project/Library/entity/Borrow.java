@@ -1,49 +1,51 @@
 package com.project.Library.entity;
-
-import com.project.Library.entity.Book;
-
-import com.project.Library.entity.Patron;
-
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name="borrow_record")
+@IdClass(BorrowId.class)
+@Data
+@NoArgsConstructor
 public class Borrow {
 
-    // A patron can borrow multiple books , but a single book can only be borrowed by 1 patron
-    // this means that 1 patron can have many books 
-    // 1 book can only have one owner 
-    // but a book can be reborrwed 
-    // f ana b2ees 3l record ? wla 3la general scale ? 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int record_id; 
+    @ManyToOne
+    @JoinColumn(name = "patron_id", nullable = false)
+    private Patron patron;
 
-    // will need to assign mapping 
-    private Set<Book> borrowed_books = new Hashset<>();
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 
-    private Set<Patron> borrowing_patrons = new Hashset<>();
 
-    @Column(name="borrow_date",nullable=false)
-    private LocalDate borrow_date; 
 
-    @Column(name="return_date", nullable=false)
-    private LocalDate return_date; 
+    @Id
+    @Column(name="borrow_date", nullable=false)
+    private LocalDate borrow_date;
 
-    // constructor with all 
 
-    Borrow(){
+    @Column(name="return_date")
+    private LocalDate return_date;
 
-    }
 
-    Borrow(LocalDate borrow_date , LocalDate return_date){
+
+    public Borrow(Patron patron, Book book, LocalDate borrow_date, LocalDate return_date) {
+        this.patron = patron;
+        this.book = book;
         this.borrow_date = borrow_date;
         this.return_date = return_date;
     }
 
-    //TODO: setters and getters
+
+
+
 
 }

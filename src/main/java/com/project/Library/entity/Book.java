@@ -1,11 +1,18 @@
 package com.project.Library.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.util.List;
 
 @Entity
 @Table(name="book")
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     // data members and columns
@@ -20,54 +27,19 @@ public class Book {
     @Column(name="author_name", length = 50,nullable = false)
     private String author_name;
 
-    //TODO: mapping with Borrow
 
-    public Book(int book_id, String title, String author_name) {
-        this.book_id = book_id;
+    @Column(name="borrowed", columnDefinition = "boolean default false")
+    private boolean borrowed = false;
+
+
+
+    public Book(String title, String author_name, boolean borrowed ) {
         this.title = title;
         this.author_name = author_name;
-   }
+        this.borrowed = borrowed;
 
-    public Book(String title, String author_name, boolean borrowed) {
-        this.title = title;
-        this.author_name = author_name;
     }
 
-    public Book() {
-    }
-
-    public int getBook_id() {
-        return book_id;
-    }
-
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor_name() {
-        return author_name;
-    }
-
-    public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
-    }
-    
-    @Override
-    public String toString() {
-        return "Book{" +
-                "book_id=" + book_id +
-                ", title='" + title + '\'' +
-                ", author_name='" + author_name + '\'' +
-                '}';
-    }
 
 
 }

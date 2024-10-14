@@ -6,13 +6,13 @@ import com.project.Library.dto.BookSavedDTO;
 import java.util.List;
 
 public interface BookService {
-    String addBook(BookSavedDTO bookSavedDTO);
+    BookDTO addBook(BookSavedDTO bookSavedDTO);
 
     List<BookDTO> getAllBooks();
 
-    String updateBook(int id, BookSavedDTO bookSavedDTO);
+    BookDTO updateBook(int id, BookSavedDTO bookSavedDTO);
 
-    String deleteBook(int id);
+    boolean deleteBook(int id);
 
     BookDTO getBookData(int id);
 }

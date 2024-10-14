@@ -18,14 +18,26 @@ public class PatronServiceIMPL implements PatronService {
     private PatronRepo PatronRepo;
 
     @Override
-    public String addPatron(PatronSavedDTO PatronSavedDTO) {
-        Patron Patron = new Patron(
-                PatronSavedDTO.getName(),
-                PatronSavedDTO.getPhone_no(),
-                PatronSavedDTO.getMembership_no()
+    public PatronDTO addPatron(PatronSavedDTO patronSavedDTO) {
+
+
+        PatronRepo.findByMembershipNo(patronSavedDTO.getMembership_no())
+                .ifPresent(patron -> {
+            throw new RuntimeException("Patron with Membership No. " + patronSavedDTO.getMembership_no() + " already exists !!");
+        });
+        Patron patron = new Patron(
+                patronSavedDTO.getName(),
+                patronSavedDTO.getPhone_no(),
+                patronSavedDTO.getMembership_no()
         );
-        PatronRepo.save(Patron);
-        return "Patron Added Successfully";
+        PatronRepo.save(patron);
+        PatronDTO patronDTO = new PatronDTO(
+                patron.getPatron_id(),
+                patron.getName(),
+                patron.getPhone_no(),
+                patron.getMembershipNo()
+        );
+        return patronDTO;
     }
 
     @Override
@@ -34,57 +46,62 @@ public class PatronServiceIMPL implements PatronService {
         List<PatronDTO> PatronDTOList = new ArrayList<>();
 
         for (Patron patron:allPatrons){
-            PatronDTO PatronDTO = new PatronDTO(
+            PatronDTO patronDTO = new PatronDTO(
                     patron.getPatron_id(),
                     patron.getName(),
                     patron.getPhone_no(),
-                    patron.getMembership_no()
+                    patron.getMembershipNo()
             );
-            PatronDTOList.add(PatronDTO);
+            PatronDTOList.add(patronDTO);
         }
         return PatronDTOList;
     }
 
     @Override
-    public String updatePatron(int id, PatronSavedDTO PatronUpdateDTO) {
+    public PatronDTO updatePatron(int id, PatronSavedDTO patronUpdateDTO) {
         // check if there's a Patron with the id that exists
 
         if (PatronRepo.existsById(id)){
-            Patron Patron = PatronRepo.getReferenceById(id);
-            Patron.setName(PatronUpdateDTO.getName());
-            Patron.setPhone_no(PatronUpdateDTO.getPhone_no());
-            Patron.setMembership_no(PatronUpdateDTO.getMembership_no());
-            PatronRepo.save(Patron);
-            return "Update Successful!";
-
+            Patron patron = PatronRepo.getReferenceById(id);
+            patron.setName(patronUpdateDTO.getName());
+            patron.setPhone_no(patronUpdateDTO.getPhone_no());
+            patron.setMembershipNo(patronUpdateDTO.getMembership_no());
+            PatronRepo.save(patron);
+            PatronDTO patronDTO = new PatronDTO(
+                    patron.getPatron_id(),
+                    patron.getName(),
+                    patron.getPhone_no(),
+                    patron.getMembershipNo()
+            );
+            return patronDTO;
         }
         else{
-            System.out.println("Patron ID Doesn't Exist !!");
-            return "Entry doesn't exist!";
+            throw new RuntimeException("Patron ID Doesn't Exist !!");
         }
 
     }
 
     @Override
-    public String deletePatron(int id) {
+    public boolean deletePatron(int id) {
         if (PatronRepo.existsById(id)){
             PatronRepo.deleteById(id);
-            return "Deleted Successfully";
+
+            return true;
         }
         else{
-            return "Patron Doesn't Exist" ;
+         throw new RuntimeException("Patron ID Doesn't Exist !!");
         }
     }
 
     @Override
     public PatronDTO getPatronData(int id) {
         Patron Patron = PatronRepo.getReferenceById(id);
-        PatronDTO PatronDTO = new PatronDTO(
+        PatronDTO patronDTO = new PatronDTO(
                 Patron.getPatron_id(),
                 Patron.getName(),
                 Patron.getPhone_no(),
-                Patron.getMembership_no()
+                Patron.getMembershipNo()
         );
-        return PatronDTO;
+        return patronDTO;
     }
 }

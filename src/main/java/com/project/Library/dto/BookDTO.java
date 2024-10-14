@@ -10,4 +10,5 @@ public class BookDTO {
     private int book_id ;
     private String title;
     private String author_name;
+    private boolean borrowed;
 }

@@ -6,13 +6,13 @@ import com.project.Library.dto.PatronSavedDTO;
 import java.util.List;
 
 public interface PatronService {
-    String addPatron(PatronSavedDTO PatronSavedDTO);
+    PatronDTO addPatron(PatronSavedDTO patronSavedDTO);
 
     List<PatronDTO> getAllPatrons();
 
-    String updatePatron(int id, PatronSavedDTO PatronSavedDTO);
+    PatronDTO updatePatron(int id, PatronSavedDTO patronUpdateDTO);
 
-    String deletePatron(int id);
+    boolean deletePatron(int id);
 
     PatronDTO getPatronData(int id);
 }
