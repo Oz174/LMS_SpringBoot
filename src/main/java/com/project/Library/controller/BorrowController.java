@@ -23,8 +23,7 @@ public class BorrowController {
 
     @PostMapping("/{book_id}/return/{patron_id}")
     public String returnBook(@PathVariable int book_id , @PathVariable int patron_id){
-        String Patronname = PatronService.addPatron(patronSavedDTO);
-        return Patronname;
+        return borrowService.returnBook(book_id,patron_id);
     }
 
 }
