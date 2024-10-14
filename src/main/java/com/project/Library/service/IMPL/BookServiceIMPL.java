@@ -22,7 +22,6 @@ public class BookServiceIMPL implements BookService {
         Book book = new Book(
                 bookSavedDTO.getTitle(),
                 bookSavedDTO.getAuthor_name(),
-                bookSavedDTO.isBorrowed()
         );
         bookRepo.save(book);
         return "Book Added Successfully";
@@ -38,7 +37,6 @@ public class BookServiceIMPL implements BookService {
                     book.getBook_id(),
                     book.getTitle(),
                     book.getAuthor_name(),
-                    book.isBorrowed()
             );
             bookDTOList.add(bookDTO);
         }
@@ -53,7 +51,6 @@ public class BookServiceIMPL implements BookService {
             Book book = bookRepo.getReferenceById(id);
             book.setTitle(bookUpdateDTO.getTitle());
             book.setAuthor_name(bookUpdateDTO.getAuthor_name());
-            book.setBorrowed(bookUpdateDTO.isBorrowed());
             bookRepo.save(book);
             return "Update Successful!";
 
@@ -83,7 +80,6 @@ public class BookServiceIMPL implements BookService {
                 book.getBook_id(),
                 book.getTitle(),
                 book.getAuthor_name(),
-                book.isBorrowed()
         );
         return bookDTO;
     }

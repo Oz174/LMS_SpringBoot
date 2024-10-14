@@ -20,21 +20,15 @@ public class Book {
     @Column(name="author_name", length = 50,nullable = false)
     private String author_name;
 
-    @Column(name="is_borrowed", length=1,nullable = false)
-    private boolean borrowed;
-
-
-    public Book(int book_id, String title, String author_name, boolean borrowed) {
+    public Book(int book_id, String title, String author_name) {
         this.book_id = book_id;
         this.title = title;
         this.author_name = author_name;
-        this.borrowed = borrowed;
-    }
+   }
 
     public Book(String title, String author_name, boolean borrowed) {
         this.title = title;
         this.author_name = author_name;
-        this.borrowed = borrowed;
     }
 
     public Book() {
@@ -63,22 +57,13 @@ public class Book {
     public void setAuthor_name(String author_name) {
         this.author_name = author_name;
     }
-
-    public boolean isBorrowed() {
-        return borrowed;
-    }
-
-    public void setBorrowed(boolean borrowed) {
-        this.borrowed = borrowed;
-    }
-
+    
     @Override
     public String toString() {
         return "Book{" +
                 "book_id=" + book_id +
                 ", title='" + title + '\'' +
                 ", author_name='" + author_name + '\'' +
-                ", borrowed=" + borrowed +
                 '}';
     }
 
