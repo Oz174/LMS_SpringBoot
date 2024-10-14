@@ -44,4 +44,6 @@ public class Borrow {
         this.return_date = return_date;
     }
 
+    //TODO: setters and getters
+
 }

@@ -23,6 +23,7 @@ public class Patron {
     @Column(name="membership_no", length=11,nullable = false, unique = true)
     private int membership_no;
 
+    //TODO: mapping with borrow
 
     public Patron(int patron_id, String name, String phone_no, int membership_no) {
         this.patron_id = patron_id;

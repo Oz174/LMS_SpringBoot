@@ -20,6 +20,8 @@ public class Book {
     @Column(name="author_name", length = 50,nullable = false)
     private String author_name;
 
+    //TODO: mapping with Borrow
+
     public Book(int book_id, String title, String author_name) {
         this.book_id = book_id;
         this.title = title;
