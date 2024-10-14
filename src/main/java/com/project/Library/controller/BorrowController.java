@@ -10,9 +10,21 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/books")
+@RequestMapping("api")
 public class BorrowController {
 
     @Autowired
-    private BookService bookService;
+    private BorrowService borrowService;
+
+    @PostMapping("/{book_id}/borrow/{patron_id}")
+    public String borrowBook(@PathVariable int book_id , @PathVariable int patron_id , @RequestedBody BorrowBookDTO borrowBookDTO){
+        return borrowService.borrowBook(book_id,patron_id,borrowBookDTO);
+    }
+
+    @PostMapping("/{book_id}/return/{patron_id}")
+    public String returnBook(@PathVariable int book_id , @PathVariable int patron_id){
+        String Patronname = PatronService.addPatron(patronSavedDTO);
+        return Patronname;
+    }
+
 }
