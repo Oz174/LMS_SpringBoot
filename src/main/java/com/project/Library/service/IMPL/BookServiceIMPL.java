@@ -70,8 +70,7 @@ public class BookServiceIMPL implements BookService {
 
         }
         else{
-            System.out.println("Book ID Doesn't Exist !!");
-            return null; //!TODO: return a message to the user
+            throw new RuntimeException("Book ID Doesn't Exist !!");
         }
 
     }

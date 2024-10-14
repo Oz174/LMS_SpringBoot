@@ -22,37 +22,71 @@ public class PatronController {
     private PatronService PatronService;
 
     @PostMapping
-    public PatronDTO savePatron(@RequestBody PatronSavedDTO patronSavedDTO){
-        PatronDTO Patronname = PatronService.addPatron(patronSavedDTO);
-        return Patronname;
+    public ResponseEntity<?> savePatron(@RequestBody PatronSavedDTO patronSavedDTO) {
+        try {
+            PatronDTO patron = PatronService.addPatron(patronSavedDTO);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Patron saved successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(patron);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
+
 
     @GetMapping
-    public List<PatronDTO> getAllPatrons(){
-        List<PatronDTO> all_Patrons = PatronService.getAllPatrons();
-        return all_Patrons;
+    public ResponseEntity<?> getAllPatrons() {
+        try {
+            List<PatronDTO> allPatrons = PatronService.getAllPatrons();
+            return ResponseEntity.status(HttpStatus.OK).body(allPatrons);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
+
     @GetMapping("/{id}")
-    public PatronDTO getPatronData(@PathVariable(value="id") int id){
-        PatronDTO PatronDTO = PatronService.getPatronData(id);
-        return PatronDTO;
+    public ResponseEntity<?> getPatronById(@PathVariable(value = "id") int id) {
+        try {
+            PatronDTO Patronname = PatronService.getPatronData(id);
+            return ResponseEntity.status(HttpStatus.OK).body(Patronname);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public PatronDTO updatePatron(@PathVariable(value="id") int id,@RequestBody PatronSavedDTO patronSavedDTO){
-        PatronDTO Patronname = PatronService.updatePatron(id , patronSavedDTO);
-        return Patronname;
+    public ResponseEntity<?> updatePatron(@PathVariable(value = "id") int id, @RequestBody PatronSavedDTO patronSavedDTO) {
+        try {
+            PatronDTO patron = PatronService.updatePatron(id, patronSavedDTO);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Patron updated successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(patron);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePatron(@PathVariable(value = "id") int id){
-        PatronService.deletePatron(id);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Patron Deleted Successfully");
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<?> deletePatron(@PathVariable(value = "id") int id) {
+        try {
+            PatronService.deletePatron(id);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Patron deleted successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
 }
