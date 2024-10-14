@@ -35,4 +35,13 @@ public class Borrow {
 
     // constructor with all 
 
+    Borrow(){
+
+    }
+
+    Borrow(LocalDate borrow_date , LocalDate return_date){
+        this.borrow_date = borrow_date;
+        this.return_date = return_date;
+    }
+
 }
