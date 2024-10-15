@@ -22,7 +22,7 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<?> saveBook(@RequestBody BookSavedDTO bookSavedDTO){
+    public ResponseEntity<?> addBook(@RequestBody BookSavedDTO bookSavedDTO){
 
         try {
             return  ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(bookSavedDTO));
@@ -60,7 +60,7 @@ public class BookController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
@@ -72,7 +72,7 @@ public class BookController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
@@ -86,7 +86,7 @@ public class BookController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 

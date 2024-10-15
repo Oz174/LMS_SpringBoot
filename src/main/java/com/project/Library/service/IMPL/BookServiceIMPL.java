@@ -88,13 +88,18 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public BookDTO getBookData(int id) {
-        Book book = bookRepo.getReferenceById(id);
-        BookDTO bookDTO = new BookDTO(
-                book.getBook_id(),
-                book.getTitle(),
-                book.getAuthor_name(),
-                book.isBorrowed()
-        );
-        return bookDTO;
+        if (bookRepo.existsById(id)){
+            Book book = bookRepo.getReferenceById(id);
+            BookDTO bookDTO = new BookDTO(
+                    book.getBook_id(),
+                    book.getTitle(),
+                    book.getAuthor_name(),
+                    book.isBorrowed()
+            );
+            return bookDTO;
+        }
+        else{
+            throw new RuntimeException("Book ID Doesn't Exist !!");
+        }
     }
 }

@@ -22,12 +22,12 @@ public class PatronController {
     private PatronService PatronService;
 
     @PostMapping
-    public ResponseEntity<?> savePatron(@RequestBody PatronSavedDTO patronSavedDTO) {
+    public ResponseEntity<?> addPatron(@RequestBody PatronSavedDTO patronSavedDTO) {
         try {
             PatronDTO patron = PatronService.addPatron(patronSavedDTO);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Patron saved successfully");
-            return ResponseEntity.status(HttpStatus.OK).body(patron);
+            return ResponseEntity.status(HttpStatus.CREATED).body(patron);
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
@@ -57,7 +57,7 @@ public class PatronController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
@@ -71,7 +71,7 @@ public class PatronController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
@@ -85,7 +85,7 @@ public class PatronController {
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
             response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 

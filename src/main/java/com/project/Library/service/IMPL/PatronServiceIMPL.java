@@ -95,13 +95,18 @@ public class PatronServiceIMPL implements PatronService {
 
     @Override
     public PatronDTO getPatronData(int id) {
-        Patron Patron = PatronRepo.getReferenceById(id);
-        PatronDTO patronDTO = new PatronDTO(
-                Patron.getPatron_id(),
-                Patron.getName(),
-                Patron.getPhone_no(),
-                Patron.getMembershipNo()
-        );
-        return patronDTO;
+       if(PatronRepo.existsById(id)){
+           Patron patron = PatronRepo.getReferenceById(id);
+           PatronDTO patronDTO = new PatronDTO(
+                   patron.getPatron_id(),
+                   patron.getName(),
+                   patron.getPhone_no(),
+                   patron.getMembershipNo()
+           );
+           return patronDTO;
+       }
+       else{
+           throw new RuntimeException("Patron ID Doesn't Exist !!");
+       }
     }
 }
