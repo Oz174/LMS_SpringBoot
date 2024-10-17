@@ -5,7 +5,7 @@ This template guides you through CRUD operations (GET, POST, PUT, DELETE), varia
 
 # How to Run the App 
 
-**Before running the app , please edit your MySQL database username and possword in the application.properties files as I am using mine**
+**Before running the app , please edit your MySQL database username and password in the application.properties files as I am using mine**
 
 Using IntelliJ , Right After Dependencey Installation for MAVEN 
 1. Go to the file "src/main/java/com/project/Library/LibraryApplication.java" and click run , Build should take few seconds
